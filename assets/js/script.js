@@ -13,11 +13,27 @@ function writePassword() {
 }
 
 function generatePassword(){
+var passLength = 0;
+var lowerBool;
+var upperBool;
+var numberBool;
+var specialBool;
+
+var responses = ['y', 'yes', 'n', 'no', null];
+
+
   // prompt length of password 8-128
     // convert to number
     // validate that input is a number, and between 8 and 128
       // If yes, save value and proceed
       // If no, re-prompt
+  
+
+  while (passLength<8 || passLength>128 || typeof(passLength)===NaN){
+  passLength = parseInt(prompt("How long should your password be? Enter a value between 8 and 128."));
+  }
+  console.log(passLength);
+
 
 
   // prompt lowercase
@@ -25,6 +41,17 @@ function generatePassword(){
     // validate that input is either y, yes, n, no
      // If yes, save value and proceed
      // If no, re-prompt
+
+  while (!responses.includes(lowerBool)){
+    lowerBool = prompt("Include lowercase characters? Enter Y/N");
+    if (lowerBool!=null){
+      lowerBool.toLowerCase();
+    }
+  }
+
+  lowerBool = validateData(lowerBool);
+
+  console.log(lowerBool);
   
   // prompt uppercase
     // sanitize input
@@ -32,18 +59,32 @@ function generatePassword(){
       // If yes, save value and proceed
       // If no, re-prompt
   
+  while (!responses.includes(upperBool)){
+    upperBool = prompt("Include uppercase characters? Enter Y/N").toLowerCase();
+  }
+  console.log(upperBool);
+  
   // prompt numeric
     // sanitize input
     // validate that input is either y, yes, n, no
       // If yes, save value and proceed
       // If no, re-prompt
   
+  while (!responses.includes(numberBool)){
+    numberBool = prompt("Include numerical characters? Enter Y/N").toLowerCase();
+  }
+  console.log(numberBool);
+
   // prompt special characters
     // sanitize input
     // validate that input is either y, yes, n, no
       // If yes, save value and proceed
       // If no, re-prompt
 
+  while (!responses.includes(specialBool)){
+      specialBool = prompt("Include special characters? Enter Y/N").toLowerCase();
+  }
+  console.log(specialBool);
   // Handle case if all answers are no
 
   // start with randomly generated string with the first approved character type
@@ -68,6 +109,16 @@ function generatePassword(){
 
 }
 
+
+function validateData (data){
+if (data === 'y' || data === 'yes'){
+  data = true;
+} else{
+  data = false;
+}
+
+return data
+}
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
