@@ -2,6 +2,10 @@
 var generateBtn = document.querySelector("#generate");
 var passwordText = document.querySelector("#password");
 
+var affirmativeResponses = ['y', 'yes',];
+var negativeResponses = ['n', 'no', null];
+var responses = affirmativeResponses.concat(negativeResponses);
+
 
 // Write password to the #password input
 function writePassword() {
@@ -13,13 +17,22 @@ function writePassword() {
 }
 
 function generatePassword(){
+var passLengthPrompt = "How long should your password be? Enter a value between 8 and 128.";
 var passLength = 0;
+
+var lowerBoolPrompt = "Include lowercase characters? Enter Y/N";
 var lowerBool;
+
+var upperBoolPrompt = "Include uppercase characters? Enter Y/N";
 var upperBool;
+
+var numberBoolPrompt = "Include special characters? Enter Y/N";
 var numberBool;
+
+var specialBoolPrompt = "Include special characters? Enter Y/N";
 var specialBool;
 
-var responses = ['y', 'yes', 'n', 'no', null];
+var password = '';
 
 
   // prompt length of password 8-128
@@ -29,8 +42,9 @@ var responses = ['y', 'yes', 'n', 'no', null];
       // If no, re-prompt
   
 
-  while (passLength<8 || passLength>128 || typeof(passLength)===NaN){
-  passLength = parseInt(prompt("How long should your password be? Enter a value between 8 and 128."));
+  while (passLength<8 || passLength>128 || Number.isNaN(passLength)){
+  passLength = parseInt(prompt(passLengthPrompt));
+  passLengthPrompt = "Please try again. How long should your password be? Enter a value between 8 and 128.";
   }
   console.log(passLength);
 
@@ -43,10 +57,10 @@ var responses = ['y', 'yes', 'n', 'no', null];
      // If no, re-prompt
 
   while (!responses.includes(lowerBool)){
-    lowerBool = prompt("Include lowercase characters? Enter Y/N");
-    if (lowerBool!=null){
-      lowerBool.toLowerCase();
-    }
+    lowerBool = prompt(lowerBoolPrompt);
+    lowerBool = sanitizeData(lowerBool);
+    lowerBoolPrompt = "Please try again. Include lowercase characters? Enter Y/N";
+    console.log(lowerBool);
   }
 
   lowerBool = validateData(lowerBool);
@@ -60,8 +74,14 @@ var responses = ['y', 'yes', 'n', 'no', null];
       // If no, re-prompt
   
   while (!responses.includes(upperBool)){
-    upperBool = prompt("Include uppercase characters? Enter Y/N").toLowerCase();
+    upperBool = prompt(upperBoolPrompt);
+    console.log(upperBool);
+    upperBool = sanitizeData(upperBool);
+    upperBoolPrompt = "Please try again. Include uppercase characters? Enter Y/N";
   }
+
+  upperBool = validateData(upperBool);
+
   console.log(upperBool);
   
   // prompt numeric
@@ -71,8 +91,13 @@ var responses = ['y', 'yes', 'n', 'no', null];
       // If no, re-prompt
   
   while (!responses.includes(numberBool)){
-    numberBool = prompt("Include numerical characters? Enter Y/N").toLowerCase();
+    numberBool = prompt(numberBoolPrompt);
+    numberBool = sanitizeData(numberBool);
+    numberBoolPrompt = "Please try again. Include special characters? Enter Y/N";
   }
+
+  numberBool = validateData(numberBool);
+
   console.log(numberBool);
 
   // prompt special characters
@@ -82,8 +107,12 @@ var responses = ['y', 'yes', 'n', 'no', null];
       // If no, re-prompt
 
   while (!responses.includes(specialBool)){
-      specialBool = prompt("Include special characters? Enter Y/N").toLowerCase();
+      specialBool = prompt(specialBoolPrompt);
+      specialBool = sanitizeData(specialBool);
+      specialBoolPrompt = "Please try again. Include special characters? Enter Y/N";
   }
+
+  specialBool = validateData(specialBool);
   console.log(specialBool);
   // Handle case if all answers are no
 
@@ -109,16 +138,24 @@ var responses = ['y', 'yes', 'n', 'no', null];
 
 }
 
+function sanitizeData(data){
+  if (data!=null){
+    dataLower = data.toLowerCase();
+    return dataLower;
+  }
+  return data;
+}
+
 
 function validateData (data){
-if (data === 'y' || data === 'yes'){
+if (affirmativeResponses.includes(data)){
   data = true;
 } else{
   data = false;
 }
-
 return data
 }
+
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
