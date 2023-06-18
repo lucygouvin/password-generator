@@ -18,17 +18,21 @@ function writePassword() {
 }
 
 function generatePassword(){
-  
-  // Prompt user for password criteria
-  var criteria = prompts();
+  var password = '';
+  var criteria = [];
+  // Flag variable to track whether this is the fist time the user has been prompted
+  var firstRound = true;
 
-var password = '';
-
-
-  
-
-
-  // // Handle case if all answers are no
+  // Prompt user for password criteria. Keep prompting until they reply "yes" to at least one character type.
+  while (!criteria.includes(true)){
+    if (!firstRound){
+      // Tell the user why the loop is repeating
+      alert("You must select at least one character type. Please try again.")
+    }
+    criteria = prompts();
+    firstRound = false;
+    console.log(criteria);
+  }
 
   // // start with randomly generated string with the first approved character type
 
