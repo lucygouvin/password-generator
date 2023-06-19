@@ -27,7 +27,7 @@ The application is available at this site:[https://lucygouvin.github.io/password
 6. Pressing the "Generate Password" button again will generate a new password with the previously entered criteria.
 7. Refreshing the page and then pressing the "Generate Password" will prompt the user to enter criteria again. 
 
-![Screenshot of password generator page with a browser prompt asking for password length](assets/images/password_generator1.png)
+![Screenshot of password generator page with a browser prompt asking for password length](/images/password_generator1.png)
 
 ## License
 
